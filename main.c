@@ -4,7 +4,7 @@
 #include <string.h>
 //Variables Globales y nuevos tipos de datos
 #define MAX_ARREGLO 500
-//Función principal
+//FunciÃ³n principal
 int main() {
 	//Configurando el buffer de salida
 	setvbuf(stderr, NULL, _IONBF, 0);
@@ -12,18 +12,25 @@ int main() {
 	char Cadena[MAX_ARREGLO];
 	int Salto;
 
-	printf("Favor de ingresar una palabra u oración para que posteriormente este sea cifrado en base al cifrado César");
+	printf(
+			"Favor de ingresar una palabra u oraciÃ³n para que posteriormente este sea cifrado en base al cifrado CÃ©sar");
 	gets(Cadena);
-	int Tam=strlen(Cadena);
-	printf("Ahora ingrese cuantos saltos desea que realize para cada letra en la oración");
-	scanf("%d",&Salto);
+	int Tam = strlen(Cadena);
+	printf(
+			"Ahora ingrese cuantos saltos desea que realize para cada letra en la oraciÃ³n");
+	scanf("%d", &Salto);
 
-	for(int i=0; i<Tam;i++){
-		if((Cadena[i]>64 && Cadena[i]<91-Salto) || ((Cadena[i]>96 && Cadena[i]<123-Salto))){
-			Cadena[i]+=Salto;
-		}else if(Cadena[i]+Salto>89){
-			Cadena[i]=64;
-			Cadena[i]+=Salto;
+	for (int i = 0; i < Tam; i++) {
+		if ((Cadena[i] > 64 && Cadena[i] < 91)
+				|| ((Cadena[i] > 96 && Cadena[i] < 123))) {
+			for (int j = 0; j < Salto; j++) {
+				Cadena[i]++;
+				if (Cadena[i] > 90&& Cadena[i] < 97) {
+					Cadena[i] = 65;
+				} else if (Cadena[i] > 122) {
+					Cadena[i]=97;
+				}
+			}
 		}
 	}
 	puts(Cadena);
