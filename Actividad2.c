@@ -17,7 +17,7 @@ void Registro_Alumno(Alumno *Student, int b) {
 	printf("Nombre del alumno #%d: ", b + 1);
 	fflush(stdin);
 	gets((Student + b)->Nombre);
-	printf("Número de Carrera: ");
+	printf("NÃºmero de Carrera: ");
 	scanf("%d", &(Student + b)->Carrera);
 	printf("edad del alumno #%d:", b + 1);
 	scanf("%d", &(Student + b)->Edad);
@@ -30,7 +30,7 @@ void Imprimir_Datos(Alumno *Student) {
 					Student->Expediente);
 			printf("Nombre del alumno #%d: ", i + 1);
 			puts(Student->Nombre);
-			printf("Número de Carrera: %d\n", Student->Carrera);
+			printf("NÃºmero de Carrera: %d\n", Student->Carrera);
 			printf("edad del alumno #%d: %d\n", i + 1, Student->Edad);
 			Student++;
 		}
@@ -48,7 +48,7 @@ void Imprimir_Dato(Alumno *Student, int i) {
 	printf("Expediente del alumno #%d: %d\n", i + 1, (Student + i)->Expediente);
 	printf("Nombre del alumno #%d: ", i + 1);
 	puts((Student + i)->Nombre);
-	printf("Número de Carrera: %d\n", (Student + i)->Carrera);
+	printf("NÃºmero de Carrera: %d\n", (Student + i)->Carrera);
 	printf("edad del alumno #%d: %d\n", i + 1, (Student + i)->Edad);
 }
 void Buscar_Alumno(Alumno *Student, int f, int j) {
@@ -69,12 +69,12 @@ void Buscar_Alumno(Alumno *Student, int f, int j) {
 	}
 
 }
-//Función principal
+//FunciÃ³n principal
 int main() {
 	//Configurando el buffer de salida
 	setvbuf(stderr, NULL, _IONBF, 0);
 	setvbuf(stdout, NULL, _IONBF, 0);
-	//Declaración de variables
+	//DeclaraciÃ³n de variables
 	Alumno Estudiante[MAX];
 	Alumno *Student = Estudiante;
 	char Menu;
@@ -93,7 +93,7 @@ int main() {
 		case 'a':
 			Student = Estudiante;
 			printf(
-					"Favor de ingresar el número del alumno al que desea ingresar datos: ");
+					"Favor de ingresar el nÃºmero del alumno al que desea ingresar datos: ");
 			scanf("%d", &b);
 			b -= 1;
 			Registro_Alumno(Student, b);
@@ -105,14 +105,14 @@ int main() {
 		case 'c':
 
 			printf(
-					"Favor de ingresar el número del alumno que desea eliminar sus datos: ");
+					"Favor de ingresar el nÃºmero del alumno que desea eliminar sus datos: ");
 			scanf("%d", &b);
 			b -= 1;
 			Borrar_Datos(Student, b);
 			break;
 		case 'd':
 			printf(
-					"¿De qué forma desea buscar el alumno?\n[1]Expediente\n[2]Edad\n");
+					"Â¿De quÃ© forma desea buscar el alumno?\n[1]Expediente\n[2]Edad\n");
 			scanf("%d", &f);
 			if (f == 1) {
 				printf("Ingrese el expediente del alumno: ");
@@ -128,11 +128,11 @@ int main() {
 			Menu = 'e';
 			break;
 		default:
-			printf("Error, vuelva a ingresar un inciso válido\n");
+			printf("Error, vuelva a ingresar un inciso vÃ¡lido\n");
 		}
 	} while (Menu != 'e');
 	//Procesameinto de datos
-	//Salida de información
+	//Salida de informaciÃ³n
 	return 0;
 }
 
