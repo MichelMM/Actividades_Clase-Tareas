@@ -1,0 +1,154 @@
+//Directivas al preprocesador
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+//Variables Globales y nuevos tipos de datos
+typedef struct {
+	char nombre[15];
+	float calificacion;
+} Profesor;
+int Acumu = 0;
+//prototipos de funciones
+void averageArray(Profesor *, int, Profesor*);
+void readArray(Profesor *, int);
+void mergeArrays(Profesor *, int, Profesor *, int, Profesor *, int);
+void sortArray(Profesor *, int);
+void printArray(Profesor *, int);
+
+//Función principal
+int main() {
+	//Configurando el buffer de salida
+	setvbuf(stderr, NULL, _IONBF, 0);
+	setvbuf(stdout, NULL, _IONBF, 0);
+
+	Profesor arr1[20];  //Primer arreglo
+	Profesor arr2[20];  //Segundo arreglo
+	Profesor arrF[40];  //Arreglo final, con elementos fusionados y ordenados
+	int n1, n2, n12 = 0; //Longitud de los arreglos
+	Profesor *arre1 = arr1;
+	Profesor *arre2 = arr2;
+	Profesor *arreF = arrF;
+	printf("Ingrese el número de profesores que ingresara: ");
+	scanf("%d", &n1);
+	readArray(arre1, n1); //leer el primer arreglo
+	printf("Ingrese el número de profesores que ingresara: ");
+	scanf("%d", &n2);
+	readArray(arre2, n2); //leer el segundo arreglo
+	mergeArrays(arre1, n1, arre2, n2, arreF, n12); //Fusionar los dos arreglos en un tercer arreglo
+	sortArray(arreF, Acumu); //Ordenar los elementos del tercer arreglo, recuerde que pueden
+	//existir profesores repetidos
+	printArray(arreF, Acumu);
+	//printArray();   //Imprimir el resultado final
+
+	return 0;
+}
+//Desarrollo de funciones
+void readArray(Profesor *Maestro, int NProfesor) {
+	printf("ingrese los datos de los profesores que ingresara\n");
+	for (int i = 0; i < NProfesor; i++) {
+		fflush(stdin);
+		scanf("%s %f", Maestro->nombre, &Maestro->calificacion);
+		Maestro++;
+	}
+}
+
+void mergeArrays(Profesor *arre1, int n1, Profesor *arre2, int n2,
+		Profesor *arrF, int n12) {
+	n12 = 0;
+	Profesor ABC[40];
+	Profesor *arrT;
+	arrT = ABC;
+
+	for (int i = 0; i < n1; i++) {
+		strcpy((arrT + n12)->nombre, (arre1 + i)->nombre);
+		(arrT + n12)->calificacion = (arre1 + i)->calificacion;
+		n12++;
+
+	}
+	for (int i = 0; i < n2; i++) {
+		strcpy((arrT + n12)->nombre, (arre2 + i)->nombre);
+		(arrT + n12)->calificacion = (arre2 + i)->calificacion;
+		n12++;
+	}
+
+	averageArray(arrF, n12, arrT);
+
+}
+
+void averageArray(Profesor *arrF, int n12, Profesor *arrT) {
+	float acum = 0;
+	int cont = 0;
+	char G[15] = "...............";
+	Profesor *ARRF, ABC[40];
+	ARRF = ABC;
+	for (int i = 0; i < n12; i++) {
+		strcpy((ARRF + i)->nombre, (arrT + i)->nombre);
+		(ARRF + i)->calificacion = (arrT + i)->calificacion;
+	}
+
+	for (int i = 0; i < n12; i++) {
+		for (int j = 0; j < n12; j++) {
+			if (i != j) {
+				if (strcmp((arrT + i)->nombre, (arrT + j)->nombre) == 0) {
+					for (int z = 0; z < 15; z++) {
+						(arrT + j)->nombre[z] = '.';
+					}
+					(arrT + j)->calificacion = 20;
+				}
+			}
+		}
+	}
+	for (int i = 0; i < n12; i++) {
+		if ((arrT + i)->calificacion != 20) {
+			strcpy((arrF + Acumu)->nombre, (ARRF + i)->nombre);
+			Acumu++;
+		}
+	}
+	for (int l = 0; l < n12; l++) {
+		if (strcmp((arrT + l)->nombre, G) != 0) {
+			acum = 0;
+			acum += (ARRF + l)->calificacion;
+			cont = 1;
+			for (int j = 0; j < n12; j++) {
+				if (l != j) {
+					if (strcmp((ARRF + l)->nombre, (ARRF + j)->nombre) == 0) {
+						acum += (ARRF + j)->calificacion;
+						cont++;
+					}
+				}
+			}
+			for (int i = 0; i < n12; i++) {
+				if (strcmp((arrT + l)->nombre, (arrF + i)->nombre) == 0) {
+					if (cont != 1) {
+						(arrF + i)->calificacion = acum / cont;
+					} else {
+						(arrF + i)->calificacion = acum;
+					}
+				}
+			}
+		}
+	}
+}
+
+void sortArray(Profesor *arrF, int n12) {
+	int i, j;
+	Profesor t;
+	for (i = 0; i < n12; i++) {
+		for (j = 0; j < n12 - 1; j++) {
+			if ((arrF + j)->calificacion < (arrF + j + 1)->calificacion) {
+				t.calificacion = (arrF + j)->calificacion;
+				strcpy(t.nombre, (arrF + j)->nombre);
+				(arrF + j)->calificacion = (arrF + j + 1)->calificacion;
+				strcpy((arrF + j)->nombre, (arrF + j + 1)->nombre);
+				(arrF + j + 1)->calificacion = t.calificacion;
+				strcpy((arrF + j + 1)->nombre, t.nombre);
+			}
+		}
+	}
+}
+
+void printArray(Profesor *arrF, int n12) {
+	for (int i = 0; i < n12; i++) {
+		printf("%s  %.1f\n", (arrF + i)->nombre, (arrF + i)->calificacion);
+	}
+}
