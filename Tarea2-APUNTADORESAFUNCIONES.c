@@ -12,12 +12,12 @@ typedef struct {
 } PI;
 //prototipos de funciones
 DWORD WINAPI PIPP(void *);
-//Funci髇 principal
+//Funci贸n principal
 int main() {
 	//Configurando el buffer de salida
 	setvbuf(stderr, NULL, _IONBF, 0);
 	setvbuf(stdout, NULL, _IONBF, 0);
-	//Declaraci髇 de variables
+	//Declaraci贸n de variables
 	clock_t start = clock();
 	HANDLE h[16];
 	PI pi;
@@ -25,7 +25,7 @@ int main() {
 	long i;
 	double cont = 0;
 	do {
-		printf("緾u醤tos hilos desea utilizar en esta ejecucu髇 de programa?\n[a]1\n[b]2\n[c]4\n[d]8\n[e]16\n[f]Salir\n");
+		printf("驴Cu谩ntos hilos desea utilizar en esta ejecucu贸n de programa?\n[a]1\n[b]2\n[c]4\n[d]8\n[e]16\n[f]Salir\n");
 		scanf("%c", &d);
 		switch (d) {
 		case 'a':
@@ -105,7 +105,7 @@ int main() {
 
 	//Entrada de datos
 	//Procesameinto de datos
-	//Salida de informaci髇
+	//Salida de informaci贸n
 	return 0;
 }
 //Desarrollo de funciones
