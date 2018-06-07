@@ -4,12 +4,12 @@
 #include <math.h>
 #include <time.h>
 #include <windows.h>
+#include <inttypes.h>
 //Variables Globales y nuevos tipos de datos
 typedef struct {
-	long i;
-	float cont;
-	int j,hilos;
+	long long inicio, fin;
 } PI;
+float Acumu = 0;
 //prototipos de funciones
 DWORD WINAPI PIPP(void *);
 //Función principal
@@ -22,76 +22,29 @@ int main() {
 	HANDLE h[16];
 	PI pi;
 	char d;
-	long i;
-	double cont = 0;
+	int i,hilos;
 	do {
-		printf("¿Cuántos hilos desea utilizar en esta ejecucuón de programa?\n[a]1\n[b]2\n[c]4\n[d]8\n[e]16\n[f]Salir\n");
+		printf(
+				"¿Cuántos hilos desea utilizar en esta ejecucuón de programa?\n[a]Ingresar hilos\n[f]Salir\n");
 		scanf("%c", &d);
+
 		switch (d) {
 		case 'a':
-			pi.hilos=1;
-			for (i = 0; i < pi.hilos; i++) {
-				pi.j = i;
+			scanf("%d",&hilos);
+			for (i = 0; i < hilos; i++) {
+				pi.inicio=500/hilos*i+1;
+				pi.fin=500/hilos*(i+1);
 				h[i] = CreateThread(NULL, 0, PIPP, (void *) &pi, 0, NULL);
-				WaitForSingleObject(h[i], INFINITE);
-				cont += pi.cont;
 			}
-			cont *= 4;
-			printf("%.10lf\n", cont);
-
-			break;
-		case 'b':
-			pi.hilos=2;
-			for (i = 0; i < pi.hilos; i++) {
-				pi.j = i;
-				h[i] = CreateThread(NULL, 0, PIPP, (void *) &pi, 0, NULL);
+			for (i = 0; i < hilos; i++) {
 				WaitForSingleObject(h[i], INFINITE);
-				cont += pi.cont;
 			}
-			cont *= 4;
-			printf("%.10lf\n", cont);
-
-			break;
-		case 'c':
-			pi.hilos=4;
-			for (i = 0; i < pi.hilos; i++) {
-				pi.j = i;
-				h[i] = CreateThread(NULL, 0, PIPP, (void *) &pi, 0, NULL);
-				WaitForSingleObject(h[i], INFINITE);
-				cont += pi.cont;
-			}
-			cont *= 4;
-			printf("%.10lf\n", cont);
-
-			break;
-		case 'd':
-			pi.hilos=8;
-			for (i = 0; i < pi.hilos; i++) {
-				pi.j = i;
-				h[i] = CreateThread(NULL, 0, PIPP, (void *) &pi, 0, NULL);
-				WaitForSingleObject(h[i], INFINITE);
-				cont += pi.cont;
-			}
-			cont *= 4;
-			printf("%.10lf\n", cont);
-
-			break;
-		case 'e':
-			pi.hilos=16;
-			for (i = 0; i < pi.hilos; i++) {
-				pi.j = i;
-				h[i] = CreateThread(NULL, 0, PIPP, (void *) &pi, 0, NULL);
-				WaitForSingleObject(h[i], INFINITE);
-				cont += pi.cont;
-			}
-			cont *= 4;
-			printf("%.10lf\n", cont);
-
-			break;
-		default:
+			//WaitForMultipleObjects(pi.hilos, h, TRUE, INFINITE);
+			//pi.cont *= 4;
+			printf("%.10f\n", Acumu * 4);
 			break;
 		}
-
+		fflush(stdin);
 		clock_t stop = clock();
 		int ms = 1000 * (stop - start) / CLOCKS_PER_SEC;
 		printf("%d ms\n", ms);
@@ -102,17 +55,21 @@ int main() {
 	 }
 	 cont *= 4;
 	 printf("%.10f\n", cont);*/
-
-	//Entrada de datos
-	//Procesameinto de datos
-	//Salida de información
 	return 0;
 }
 //Desarrollo de funciones
 DWORD WINAPI PIPP(void *pi) {
 	PI *P = (PI *) pi;
-	for (P->i = 50000000000 / (P->hilos) * (P->j)+1;P->i <= 50000000000 / (P->hilos) * (P->j + 1); P->i ++) {
-		P->cont += ((P->i+1) & 1? -1.0 : 1.0) / (2 *P->i - 1);
+	long long i;
+	printf("HOLA");
+	float cont = 0;
+	float ant;
+	for (i =P->inicio; i <= P->fin; i++) {
+		//printf("%"PRId64"\n", i);
+		printf("%.10f\n", ant);
+		ant= ((float) ((i + 1) & 1 ? -1.0 : 1.0) / (2 * (float) i - 1));
+		cont+=ant;
 	}
+	Acumu += cont;
 	return 0;
 }
