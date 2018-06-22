@@ -47,7 +47,7 @@ bool Deposito(char *, char *, long);
 bool ModificarCuenta(char*, long, long);
 bool Retiro(char *, char *, long);
 bool Transferencia(char *, char *, long, long);
-//FunciÛn principal
+//Funci√≥n principal
 int main() {
 	//Configurando el buffer de salida
 	setvbuf(stderr, NULL, _IONBF, 0);
@@ -115,7 +115,7 @@ int main() {
 				ImprimirCliente(DireccionCliente);
 				break;
 			default:
-				printf("Error, favor de escoger una opciÛn valida\n");
+				printf("Error, favor de escoger una opci√≥n valida\n");
 			}
 			break;
 		case 2:
@@ -140,23 +140,23 @@ int main() {
 				ImprimirCuentas(DireccionCuentas);
 				break;
 			default:
-				printf("Error, favor de escoger una opciÛn valida\n");
+				printf("Error, favor de escoger una opci√≥n valida\n");
 			}
 			break;
 		case 3:
 			printf(
-					"Transacciones\n[1]DepÛsitos\n[2]Retiro\n[3]Transferencia\n");
+					"Transacciones\n[1]Dep√≥sitos\n[2]Retiro\n[3]Transferencia\n");
 			scanf("%d", &Case);
 			switch (Case) {
 			case 1:
 				printf(
-						"Ingrese el ID de la cuenta en la que realizar· el depÛsito: ");
+						"Ingrese el ID de la cuenta en la que realizar√° el dep√≥sito: ");
 				scanf("%li", &B);
 				Deposito(DireccionTransacciones, DireccionCuentas, B);
 				break;
 			case 2:
 				printf(
-						"Ingrese el ID de la cuenta en la que realizar· el retiro: ");
+						"Ingrese el ID de la cuenta en la que realizar√° el retiro: ");
 				scanf("%li", &B);
 				Retiro(DireccionTransacciones, DireccionCuentas, B);
 				break;
@@ -168,12 +168,12 @@ int main() {
 				Transferencia(DireccionTransacciones, DireccionCuentas, B, I);
 				break;
 			default:
-				printf("Error, favor de escoger una opciÛn valida\n");
+				printf("Error, favor de escoger una opci√≥n valida\n");
 			}
 			break;
 		default:
 			if (O != 4)
-				printf("Error, favor de escoger una opciÛn valida\n");
+				printf("Error, favor de escoger una opci√≥n valida\n");
 		}
 	} while (O != 4);
 
@@ -484,12 +484,12 @@ bool Deposito(char *DireccionTransacciones, char *DireccionCuentas, long ID) {
 		return False;
 	}
 	fclose(fcuentas);
-	strcpy(Tr.TipoTransaccion, "DepÛsito");
+	strcpy(Tr.TipoTransaccion, "Dep√≥sito");
 	Tr.ID_CuentaOrigen = ID;
 	Tr.ID_Cuenta_Destino = (long) NULL;
-	printf("Ingrese el monto de la transacciÛn: ");
+	printf("Ingrese el monto de la transacci√≥n: ");
 	scanf("%li", &Tr.MontoTransaccion);
-	printf("Ingrese la fecha en la que se realizÛ el depÛsito [dd/mm/aaaa]: ");
+	printf("Ingrese la fecha en la que se realiz√≥ el dep√≥sito [dd/mm/aaaa]: ");
 	scanf("%d/%d/%d", &Tr.FechaTransaccion.dia, &Tr.FechaTransaccion.mes,
 			&Tr.FechaTransaccion.anio);
 	i++;
@@ -576,7 +576,7 @@ bool Retiro(char *DireccionTransacciones, char *DireccionCuentas, long ID) {
 				"Error, el monto seleccionado sobrepasa el retiro que se puede realizar");
 		goto CR;
 	}
-	printf("Ingrese la fecha en la que se realizÛ el Retiro [dd/mm/aaaa]: ");
+	printf("Ingrese la fecha en la que se realiz√≥ el Retiro [dd/mm/aaaa]: ");
 	scanf("%d/%d/%d", &Tr.FechaTransaccion.dia, &Tr.FechaTransaccion.mes,
 			&Tr.FechaTransaccion.anio);
 	i++;
@@ -613,7 +613,7 @@ bool Transferencia(char *DireccionTransacciones, char *DireccionCuentas,
 	strcpy(Tr.TipoTransaccion, "Transferencia");
 	Tr.ID_CuentaOrigen = IDOrigen;
 	Tr.ID_Cuenta_Destino = IDDestino;
-	CR: printf("Ingrese el monto a que ser· transferido: ");
+	CR: printf("Ingrese el monto a que ser√° transferido: ");
 	scanf("%li", &Tr.MontoTransaccion);
 	Tr.MontoTransaccion *= -1;
 	TrFl = ModificarCuenta(DireccionCuentas, IDOrigen, Tr.MontoTransaccion);
@@ -624,7 +624,7 @@ bool Transferencia(char *DireccionTransacciones, char *DireccionCuentas,
 	}
 	Tr.MontoTransaccion *= -1;
 	TrFl = ModificarCuenta(DireccionCuentas, IDDestino, Tr.MontoTransaccion);
-	printf("Ingrese la fecha en la que se realizÛ el Retiro [dd/mm/aaaa]: ");
+	printf("Ingrese la fecha en la que se realiz√≥ el Retiro [dd/mm/aaaa]: ");
 	scanf("%d/%d/%d", &Tr.FechaTransaccion.dia, &Tr.FechaTransaccion.mes,
 			&Tr.FechaTransaccion.anio);
 	i++;
